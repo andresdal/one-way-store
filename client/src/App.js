@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Grid, Card, CardContent, Button, Drawer, IconButton } from '@mui/material';  // Añadido Drawer
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';  // Icono del carrito
+import { AppBar, Toolbar, Typography, Grid, Card, CardContent, Button, Drawer, IconButton } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import DetalleProducto from './DetalleProducto';
 import Carrito from './Carrito';
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'; // Asegúrate de estar importando initMercadoPago
+
+// Componentes para las páginas de resultado de pago
+import SuccessPage from './SuccessPage';
+import FailurePage from './FailurePage';
+import PendingPage from './PendingPage';
 
 function App() {
-  const [carrito, setCarrito] = React.useState([]);  // Estado del carrito
-  const [drawerOpen, setDrawerOpen] = React.useState(false);  // Estado del Drawer
+  const [carrito, setCarrito] = useState([]); // Estado del carrito
+  const [drawerOpen, setDrawerOpen] = useState(false); // Estado del Drawer
+  const [preferenceId, setPreferenceId] = useState(null); // ID de la preferencia de pago
 
-  const productos = [  // Ejemplo de productos
+  // Inicializamos MercadoPago al inicio con tu public key
+  useEffect(() => {
+    initMercadoPago("APP_USR-f9decf82-f894-49d4-8455-a314d121f183");
+  }, []);
+
+  const productos = [
     { id: 1, nombre: 'Buzo Gris', precio: 1200, imagen: '/img_prod/buzo-gris.png' },
     { id: 2, nombre: 'Campera Negra', precio: 2500, imagen: '/img_prod/campera-negra.png' },
   ];
@@ -24,7 +36,7 @@ function App() {
     if (productoExistente) {
       const carritoActualizado = carrito.map((item) =>
         item.id === producto.id && item.talla === talla
-          ? { ...item, cantidad: item.cantidad + cantidad } 
+          ? { ...item, cantidad: item.cantidad + cantidad }
           : item
       );
       setCarrito(carritoActualizado);
@@ -33,6 +45,9 @@ function App() {
     }
   };
 
+  useEffect(() => {
+  }, [carrito]);
+
   return (
     <Router>
       <AppBar position="static">
@@ -40,7 +55,6 @@ function App() {
           <Typography variant="h6" style={{ flexGrow: 1 }}>
             <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>Tienda One Way</Link>
           </Typography>
-          {/* Botón del carrito que abre la solapa deslizante */}
           <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
             <ShoppingCartIcon />
             <Typography variant="h6" style={{ marginLeft: 8 }}>
@@ -74,11 +88,19 @@ function App() {
         }/>
 
         <Route path="/producto/:id" element={<DetalleProducto productos={productos} agregarAlCarrito={agregarAlCarrito} />} />
+
+        <Route path="/success" element={<SuccessPage />} />
+        <Route path="/failure" element={<FailurePage />} />
+        <Route path="/pending" element={<PendingPage />} />
       </Routes>
 
-      {/* Solapa deslizante para el carrito */}
       <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <Carrito carrito={carrito} setCarrito={setCarrito} /> {/* Pasamos el carrito al Drawer */}
+        <Carrito carrito={carrito} setCarrito={setCarrito} />
+        {preferenceId && (
+          <div style={{ padding: '20px' }}>
+            <Wallet initialization={{ preferenceId: preferenceId }} />
+          </div>
+        )}
       </Drawer>
     </Router>
   );
