@@ -98,7 +98,7 @@ const Carrito = ({ carrito, setCarrito }) => {
               <CardContent>
                 <Grid container alignItems="center" spacing={2}>
                   <Grid item>
-                    <img src={producto.imagen} alt={producto.nombre} style={{ width: 100, height: 100 }} />
+                    <img src={producto.imagenes[0]} alt={producto.nombre} style={{ width: 100, height: 100 }} />
                   </Grid>
                   <Grid item xs>
                     <Typography variant="h6">{producto.nombre} ({producto.talla})</Typography>

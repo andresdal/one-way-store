@@ -1,3 +1,4 @@
+/* Estilos base y animaciones existentes */
 .App {
   text-align: center;
 }
@@ -35,4 +36,212 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Nuevos estilos para la tienda */
+.store-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* Estilos para la navegación */
+.navbar {
+  background-color: #2c3e50;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: #61dafb;
+}
+
+/* Estilos para la sección hero */
+.hero-section {
+  background: linear-gradient(45deg, #2c3e50, #3498db);
+  padding: 4rem 2rem;
+  color: white;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Estilos para las tarjetas de productos */
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.product-image-container {
+  position: relative;
+  padding-top: 100%; /* Aspect ratio 1:1 */
+  overflow: hidden;
+}
+
+.product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-info {
+  padding: 1rem;
+}
+
+.product-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.product-price {
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+/* Estilos para el carrito */
+.cart-drawer {
+  width: 350px;
+  max-width: 100%;
+}
+
+.cart-item {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+/* Estilos para el footer */
+.footer {
+  background-color: #2c3e50;
+  color: white;
+  padding: 4rem 0 2rem;
+}
+
+.footer-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.footer-text {
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-icon {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+  color: #61dafb;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .product-card {
+    margin-bottom: 1rem;
+  }
+
+  .cart-drawer {
+    width: 100%;
+  }
+}
+
+/* Animaciones adicionales */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Estilos para los botones */
+.custom-button {
+  background-color: #2c3e50;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-button:hover {
+  background-color: #34495e;
+}
+
+/* Estilos para mensajes de estado */
+.status-message {
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+}
+
+.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.pending {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
 }
